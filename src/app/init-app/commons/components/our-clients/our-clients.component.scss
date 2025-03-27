@@ -1,0 +1,50 @@
+.our-clients {
+  padding: 40px 0;
+  background-color: #fff;
+
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #002e6e;
+    margin-bottom: 30px;
+  }
+
+  .client-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    transition: transform 0.3s ease;
+    height: 100%;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+
+  .client-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+
+    .client-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .client-name {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #002e6e;
+    }
+  }
+
+  .client-text {
+    font-size: 1rem;
+    color: #444;
+  }
+}

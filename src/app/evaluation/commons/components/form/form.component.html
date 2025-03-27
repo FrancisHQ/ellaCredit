@@ -1,0 +1,171 @@
+<div class="container form-container">
+  <!-- Título dinámico -->
+  <h2 class="text-center">
+    {{
+      currentStep === 1
+        ? "Ingresa tus datos para comenzar"
+        : currentStep === 2
+        ? "Revisa tu correo y coloca el código que te enviamos"
+        : "Cuéntanos un poco más sobre ti"
+    }}
+  </h2>
+
+  <div class="row">
+    <!-- Formulario -->
+    <div class="col-md-5">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <!-- Paso 1 -->
+        <div *ngIf="currentStep === 1">
+          <div class="mb-3">
+            <label for="dni" class="form-label">Documento de identidad</label>
+            <div class="input-group">
+              <select
+                class="form-select select-small"
+                formControlName="dniType"
+              >
+                <option value="1">DNI</option>
+                <option value="2">CE</option>
+                <option value="3">PASAPORTE</option>
+              </select>
+              <input
+                type="text"
+                id="dni"
+                class="form-control"
+                formControlName="dni"
+                placeholder="12345678 - 1"
+              />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              formControlName="email"
+              placeholder="ej. usuario@email.com"
+            />
+          </div>
+
+          <div class="form-check mb-3">
+            <input
+              type="checkbox"
+              id="terms"
+              class="form-check-input"
+              formControlName="terms"
+            />
+            <label for="terms" class="form-check-label"
+              >Autorizo el uso de mis datos personales para la evaluación del
+              préstamo.</label
+            >
+          </div>
+        </div>
+
+        <!-- Paso 2 -->
+        <div *ngIf="currentStep === 2">
+          <div
+            formArrayName="otp"
+            class="otp-container mb-4 d-flex justify-content-center gap-2"
+          >
+            <input
+              *ngFor="let control of otpControls; let i = index"
+              type="text"
+              maxlength="1"
+              class="otp-input form-control text-center"
+              style="width: 40px; height: 50px; font-size: 1.2rem"
+              [formControl]="control"
+              (input)="onOtpInput($event, i)"
+              (keydown)="onOtpKeyDown($event, i)"
+              [placeholder]="!control.value ? '-' : ''"
+            />
+          </div>
+
+          <p class="mb-4">
+            ¿No te llegó el código a {{ form.value.email }}? Puedes intentarlo
+            nuevamente.
+          </p>
+
+          <div class="d-grid gap-3">
+            <button class="btn btn-outline-primary" (click)="resendCode()">
+              Reenviar código
+            </button>
+          </div>
+        </div>
+
+        <!-- Paso 3 -->
+        <div *ngIf="currentStep === 3">
+          <div class="mb-3">
+            <label for="ocupacion" class="form-label"
+              >Ocupación</label
+            >
+            <input
+              type="text"
+              id="ocupacion"
+              class="form-control"
+              formControlName="ocupacion"
+              placeholder="Ej. Contador, Ingeniero, Estudiante, etc."
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="nivelEducativo" class="form-label"
+              >Nivel educativo</label
+            >
+            <select
+              id="nivelEducativo"
+              class="form-select"
+              formControlName="nivelEducativo"
+            >
+              <option value="" disabled selected>Selecciona uno</option>
+              <option value="primaria">Primaria</option>
+              <option value="secundaria">Secundaria</option>
+              <option value="tecnica">Técnica</option>
+              <option value="universidad">Universidad</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">¿Tienes ingresos propios?</label>
+            <select class="form-select" formControlName="tieneIngresos">
+              <option value="" disabled selected>Selecciona uno</option>
+              <option value="empresa">
+                Sí, trabajo para una empresa o institución
+              </option>
+              <option value="negocio">
+                Sí, tengo mi propio negocio o trabajo por mi cuenta
+              </option>
+              <option value="apoyo">
+                No, otra persona me apoya económicamente
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex justify-content-between">
+          <!-- <button type="button" class="btn btn-secondary" *ngIf="currentStep > 1" (click)="goBack()">Volver</button> -->
+          <button
+            type="submit"
+            class="btn btn-primary w-100"
+            [disabled]="currentStep === 2 ? !isOtpComplete() : !isStepValid()"
+          >
+            {{ currentStep < 3 ? "Continuar" : "Enviar" }}
+            <i class="bi bi-arrow-right-short"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Información lateral -->
+    <div class="col-md-6">
+      <div class="info-box">
+        <div class="info-title">
+          <img src="assets/svg/form.svg" alt="Información segura" />
+          <h5><strong>Tranquila, tu información está segura.</strong></h5>
+        </div>
+        <p>Usaremos tus datos solo para evaluar tu préstamo.</p>
+      </div>
+    </div>
+  </div>
+</div>

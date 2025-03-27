@@ -1,0 +1,24 @@
+.navbar {
+    .nav-link {
+      color: #212529;
+      font-weight: 500;
+    }
+  
+    .nav-link.active {
+      border-bottom: 2px solid #ff8000;
+    }
+  
+    .btn-primary {
+      background-color: #ff8000;
+      border-color: #ff8000;
+    }
+  
+    .btn-outline-secondary {
+      border-color: #ced4da;
+    }
+  
+    .bi {
+      font-size: 1rem;
+    }
+  }
+  

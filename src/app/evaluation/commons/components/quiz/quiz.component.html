@@ -1,0 +1,124 @@
+<div class="quiz-container">
+    <!-- Encabezado fijo para pasos 1-5 -->
+    <div *ngIf="currentStep < 6" class="quiz-header">
+      <h2>Para finalizar, evaluaremos tu perfil</h2>
+      <h3 class="mt-3">Calificación para el crédito</h3>
+      <div class="progress-container mt-3">
+        <div class="progress">
+          <div class="progress-bar" [style.width.%]="(currentStep / 6) * 100"></div>
+        </div>
+        <div class="score">{{ currentStep * 10 }}/100 puntos</div>
+      </div>
+    </div>
+  
+    <!-- Contenido dinámico por paso -->
+    <div class="quiz-content" [formGroup]="quizForm">
+      <!-- Paso 1 -->
+      <div *ngIf="currentStep === 1" class="step-1" formGroupName="step1">
+        <h4>¿Tienes una billetera digital activa? (Yape, Plin u otra)</h4>
+        <div class="options mt-3">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" id="walletYes" 
+                   value="Si" formControlName="walletActive">
+            <label class="form-check-label" for="walletYes">Sí</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" id="walletNo" 
+                   value="No" formControlName="walletActive">
+            <label class="form-check-label" for="walletNo">No</label>
+          </div>
+        </div>
+        <div *ngIf="step1.get('walletActive')?.invalid && step1.get('walletActive')?.touched" 
+             class="invalid-feedback">
+          Por favor selecciona una opción
+        </div>
+      </div>
+  
+      <!-- Paso 2 -->
+      <div *ngIf="currentStep === 2" class="step-2" formGroupName="step2">
+        <h4>¿Cuánto recibes en promedio al mes?</h4>
+        <input type="number" class="form-control mt-3" 
+               formControlName="monthlyIncome" placeholder="Ingresa el monto en S/">
+        <div *ngIf="step2.get('monthlyIncome')?.invalid && step2.get('monthlyIncome')?.touched" 
+             class="invalid-feedback">
+          Por favor ingresa un monto válido
+        </div>
+      </div>
+  
+      <!-- Paso 3 -->
+      <div *ngIf="currentStep === 3" class="step-3" formGroupName="step3">
+        <h4>¿Puedes darnos el contacto de alguien que confíe en ti?</h4>
+        <input type="text" class="form-control mt-3" 
+               formControlName="trustedContactName" placeholder="Nombre completo">
+        <div *ngIf="step3.get('trustedContactName')?.invalid && step3.get('trustedContactName')?.touched" 
+             class="invalid-feedback">
+          Nombre requerido
+        </div>
+        
+        <input type="tel" class="form-control mt-2" 
+               formControlName="trustedContactPhone" placeholder="Celular">
+        <div *ngIf="step3.get('trustedContactPhone')?.invalid && step3.get('trustedContactPhone')?.touched" 
+             class="invalid-feedback">
+          Ingresa un número de celular válido (9 dígitos)
+        </div>
+      </div>
+  
+      <!-- Paso 4 -->
+      <div *ngIf="currentStep === 4" class="step-4" formGroupName="step4">
+        <h4>¿Alguien de confianza puede ser tu aval? (Debe tener una billetera digital activa)</h4>
+        <div class="options mt-3">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" id="guarantorYes" 
+                   value="Si" formControlName="hasGuarantor">
+            <label class="form-check-label" for="guarantorYes">Si</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" id="guarantorNo" 
+                   value="No" formControlName="hasGuarantor">
+            <label class="form-check-label" for="guarantorNo">No</label>
+          </div>
+        </div>
+        <div *ngIf="step4.get('hasGuarantor')?.invalid && step4.get('hasGuarantor')?.touched" 
+             class="invalid-feedback">
+          Por favor selecciona una opción
+        </div>
+      </div>
+  
+      <!-- Paso 5 -->
+      <div *ngIf="currentStep === 5" class="step-5" formGroupName="step5">
+        <h4>¿Usas alguna app para trabajar o generar ingresos? (Rappi, Uber, PedidosYa u otra)</h4>
+        <div class="options mt-3">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" id="appsYes" 
+                   value="Si" formControlName="usesApps">
+            <label class="form-check-label" for="appsYes">Si</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" id="appsNo" 
+                   value="No" formControlName="usesApps">
+            <label class="form-check-label" for="appsNo">No</label>
+          </div>
+        </div>
+        <div *ngIf="step5.get('usesApps')?.invalid && step5.get('usesApps')?.touched" 
+             class="invalid-feedback">
+          Por favor selecciona una opción
+        </div>
+      </div>
+  
+      <!-- Paso 6 -->
+      <div *ngIf="currentStep === 6" class="step-6">
+        <div class="video-container">
+          <video controls width="100%">
+            <source src="assets/videos/final.mp4" type="video/mp4">
+            Tu navegador no soporta videos HTML5.
+          </video>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Botón Continuar -->
+    <div class="quiz-footer" *ngIf="currentStep < 6">
+      <button class="btn btn-primary" (click)="nextStep()">Continuar <i class="bi bi-arrow-right-short"></i></button>
+      <div class="steps-counter">{{ currentStep }}/6 pasos</div>
+    </div>
+  </div>

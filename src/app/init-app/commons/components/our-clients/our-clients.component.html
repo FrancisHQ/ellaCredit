@@ -1,0 +1,20 @@
+<section class="our-clients text-center">
+  <h2 class="section-title">Nuestros clientes</h2>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-4" *ngFor="let client of clients">
+        <div class="client-card">
+          <div class="client-header">
+            <img
+              [src]="client.image"
+              [alt]="client.name"
+              class="client-avatar"
+            />
+            <span class="client-name">{{ client.name }}</span>
+          </div>
+          <p class="client-text">{{ client.testimonial }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

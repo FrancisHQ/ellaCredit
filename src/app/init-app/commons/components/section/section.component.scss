@@ -1,0 +1,108 @@
+.section-benefits {
+  padding: 40px 0;
+
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #002e6e;
+    margin-bottom: 30px;
+  }
+
+  .benefit-item {
+    text-align: center;
+    padding: 20px;
+
+    .benefit-icon {
+      width: 80px;
+      height: auto;
+      margin-bottom: 15px;
+    }
+
+    .benefit-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #002e6e;
+    }
+
+    .benefit-text {
+      font-size: 1rem;
+      color: #444;
+    }
+  }
+
+  .cta-container {
+    background: #f0f6ff;
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+
+    .cta-icon {
+      width: 40px;
+      height: auto;
+    }
+
+    .cta-text {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #002e6e;
+      margin: 0;
+    }
+
+    .btn-orange {
+      background: #ff9800;
+      color: white;
+      border-radius: 20px;
+      border: none;
+      padding: 8px 15px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: #e68900;
+      }
+    }
+  }
+}
+
+// Estilos para la lista de beneficios
+.section-benefits-list {
+  padding: 40px;
+  background: #fff;
+  text-align: left;
+
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #002e6e;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 15px;
+  }
+
+  .benefits-list {
+    list-style: none;
+    padding: 0;
+
+    li {
+      font-size: 1rem;
+      color: #002e6e;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+
+      strong {
+        font-weight: bold;
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+<app-header></app-header>
+
+<button class="btn btn-link back-button" (click)="goBack()">
+    <i class="bi bi-chevron-left"></i> Volver
+  </button>
+  
+
+  <app-form *ngIf="showForm" (formSubmitted)="onFormSubmitted()"></app-form>
+  <app-quiz *ngIf="!showForm"></app-quiz>
