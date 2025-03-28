@@ -1,6 +1,6 @@
 <div class="quiz-container">
   <!-- Encabezado fijo para pasos 1-5 -->
-  <div *ngIf="currentStep < 6" class="quiz-header">
+  <div *ngIf="currentStep < 5" class="quiz-header">
     <h2>Para finalizar, evaluaremos tu perfil</h2>
     <h3 class="mt-3">Calificación para el crédito</h3>
     <div class="progress-container mt-2">
@@ -14,7 +14,7 @@
     </div>
   </div>
 
-  <div *ngIf="currentStep === 6" class="quiz-header">
+  <div *ngIf="currentStep === 5" class="quiz-header">
     <h2>
       ¿Te gustaría aprender un tip rápido sobre cómo funciona un préstamo?
     </h2>
@@ -65,22 +65,62 @@
     <!-- Paso 3 -->
     <div *ngIf="currentStep === 3" class="step-3" formGroupName="step3">
       <h4>¿Puedes darnos el contacto de alguien que confíe en ti?</h4>
-      <input
-        type="text"
-        class="form-control mt-3"
-        formControlName="trustedContactName"
-        placeholder="Ingresa el nombre y apellido"
-      />
-      <input
-        type="tel"
-        class="form-control mt-2"
-        formControlName="trustedContactPhone"
-        placeholder="999 999 999"
-      />
+
+      <!-- Opciones Sí/No -->
+      <div class="options mt-3">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="trustedContactYes"
+            value="1"
+            formControlName="hasTrustedContact"
+            (change)="showTrustedContactFields = true"
+          />
+          <label class="form-check-label" for="trustedContactYes">Sí</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="trustedContactNo"
+            value="0"
+            formControlName="hasTrustedContact"
+            (change)="showTrustedContactFields = false"
+          />
+          <label class="form-check-label" for="trustedContactNo">No</label>
+        </div>
+      </div>
+
+      <!-- Campos de contacto (solo se muestran si seleccionó Sí) -->
+      <div
+        *ngIf="
+          showTrustedContactFields &&
+          quizForm.get('step3.hasTrustedContact')?.value === '1'
+        "
+      >
+        <label for="trustedContactName" class="form-label"
+          >Nombres y Apellidos</label
+        >
+        <input
+          type="text"
+          class="form-control mt-3"
+          formControlName="trustedContactName"
+          placeholder="Ingresa el nombre y apellido"
+        />
+        <label for="dni" class="form-label">Documento de identidad</label>
+        <input
+          type="text"
+          id="dni"
+          class="form-control mt-2"
+          formControlName="trustedContactDocument"
+          placeholder="10101010"
+        />
+      </div>
     </div>
 
     <!-- Paso 4 -->
-    <div *ngIf="currentStep === 4" class="step-4" formGroupName="step4">
+    <!-- <div *ngIf="currentStep === 4" class="step-4" formGroupName="step4">
       <h4>
         ¿Alguien de confianza puede ser tu aval? (Debe tener una billetera
         digital activa)
@@ -107,10 +147,10 @@
           <label class="form-check-label" for="guarantorNo">No</label>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <!-- Paso 5 -->
-    <div *ngIf="currentStep === 5" class="step-5" formGroupName="step5">
+    <!-- Paso 4 -->
+    <div *ngIf="currentStep === 4" class="step-4" formGroupName="step4">
       <h4>
         ¿Usas alguna app para trabajar o generar ingresos? (Rappi, Uber,
         PedidosYa u otra)
@@ -140,7 +180,7 @@
     </div>
 
     <!-- Paso 6 -->
-    <div *ngIf="currentStep === 6" class="step-6">
+    <div *ngIf="currentStep === 5" class="step-5">
       <div class="video-container">
         <iframe
           width="100%"
@@ -160,20 +200,20 @@
     </div>
   </div>
 
-  <div class="quiz-footer" *ngIf="currentStep <= 6">
+  <div class="quiz-footer" *ngIf="currentStep <= 5">
     <button
       type="submit"
       class="btn btn-primary"
       (click)="nextStep()"
       [disabled]="isCurrentStepInvalid()"
     >
-      {{ currentStep === 6 ? "Ver mi puntaje" : "Continuar" }}
+      {{ currentStep === 5 ? "Ver mi puntaje" : "Continuar" }}
       <i class="bi bi-arrow-right-short"></i>
     </button>
     <div class="steps-counter">{{ currentStep }}/6 pasos</div>
   </div>
 
-  <div *ngIf="currentStep > 6" class="results-container text-center p-4 pt-0">
+  <div *ngIf="currentStep > 5" class="results-container text-center p-4 pt-0">
     <h2 class="fw-bold mb-2">¡Listo! Estos son tus resultados</h2>
 
     <div class="card border-0 shadow-lg p-4 py-2 rounded-4">
@@ -210,7 +250,12 @@
         </div>
 
         <div *ngIf="currentScore >= 65" class="p-4 mb-4">
-          <h4 class="h5 fw-bold">¡Tienes un préstamo S/X preaprobado!</h4>
+          <h4 class="h5 fw-bold">
+            ¡Tienes un préstamo S/{{
+              getApprovedAmount() | number : "1.0-0"
+            }}
+            preaprobado!
+          </h4>
           <p class="mb-0 text-start">
             Estás calificada para obtener un crédito. Acércate a una agencia BCP
             para solicitarlo.

@@ -18,8 +18,10 @@ import {
 export class QuizComponent {
   currentStep = 1;
   quizForm: FormGroup;
-  currentScore: number = 10;
+  currentScore: number = 0;
   videoWatched: boolean = false;
+  videoTimer: any;
+  showTrustedContactFields: boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.quizForm = this.fb.group({
@@ -30,16 +32,14 @@ export class QuizComponent {
         monthlyIncome: ['', [Validators.required]],
       }),
       step3: this.fb.group({
-        trustedContactName: ['', Validators.required],
-        trustedContactPhone: [
-          '',
-          [Validators.required, Validators.pattern(/^[0-9]{9}$/)],
-        ],
+        hasTrustedContact: ['', Validators.required],
+        trustedContactName: [''],
+        trustedContactDocument: ['', [Validators.pattern(/^[0-9]{8}$/)]],
       }),
+      // step4: this.fb.group({
+      //   hasGuarantor: ['', Validators.required],
+      // }),
       step4: this.fb.group({
-        hasGuarantor: ['', Validators.required],
-      }),
-      step5: this.fb.group({
         usesApps: ['', Validators.required],
       }),
     });
@@ -62,9 +62,9 @@ export class QuizComponent {
     return this.quizForm.get('step4') as FormGroup;
   }
 
-  get step5(): FormGroup {
-    return this.quizForm.get('step5') as FormGroup;
-  }
+  // get step5(): FormGroup {
+  //   return this.quizForm.get('step5') as FormGroup;
+  // }
 
   validateNumericInput(event: KeyboardEvent) {
     const allowedKeys = /[0-9]/;
@@ -78,14 +78,16 @@ export class QuizComponent {
       return;
     }
 
-    if (this.currentStep < 6) {
+    if (this.currentStep < 5) {
       this.currentStep++;
       this.calculateScore();
-      console.log("currentScore", this.currentScore);
-    } else if (this.currentStep === 6) {
+      console.log('currentScore', this.currentScore);
+    } else if (this.currentStep === 5) {
       this.currentStep++;
+
       this.calculateScore();
-      console.log("Puntaje final:", this.currentScore);
+      this.currentScore += 10;
+      console.log('Puntaje final:', this.currentScore);
     }
   }
 
@@ -93,7 +95,7 @@ export class QuizComponent {
     let score = 0;
 
     if (this.quizForm.get('step1.walletActive')?.value === '1') {
-      score += 7;
+      score += 15;
     } else if (this.quizForm.get('step1.walletActive')?.value === '2') {
       score += 0;
     }
@@ -101,34 +103,44 @@ export class QuizComponent {
     const income = parseInt(
       this.quizForm.get('step2.monthlyIncome')?.value || 0
     );
-    if (income > 2500) {
+    if (income >= 1500) {
+      score += 30;
+    } else if (income >= 800) {
       score += 20;
-    } else if (income > 0) {
+    } else if (income >= 500) {
       score += 10;
+    } else {
+      score += 0;
     }
 
-    const contactName = this.quizForm.get('step3.trustedContactName')?.value;
-    const contactPhone = this.quizForm.get('step3.trustedContactPhone')?.value;
-    if (contactName && contactPhone) {
-      score += 15;
+    if (this.quizForm.get('step3.hasTrustedContact')?.value === '1') {
+      const contactName = this.quizForm.get('step3.trustedContactName')?.value;
+      const contactDocument = this.quizForm.get(
+        'step3.trustedContactDocument'
+      )?.value;
+      if (contactName && contactDocument) {
+        score += 20;
+      }
+    } else {
+      score += 0;
     }
 
-    if (this.quizForm.get('step4.hasGuarantor')?.value === '1') {
-      score += 17;
-    } else if (this.quizForm.get('step4.hasGuarantor')?.value === '2') {
-      score += 10;
-    }
+    // if (this.quizForm.get('step4.hasGuarantor')?.value === '1') {
+    //   score += 17;
+    // } else if (this.quizForm.get('step4.hasGuarantor')?.value === '2') {
+    //   score += 10;
+    // }
 
-    if (this.quizForm.get('step5.usesApps')?.value === '1') {
-      score += 17;
-    } else if (this.quizForm.get('step5.usesApps')?.value === '2') {
+    if (this.quizForm.get('step4.usesApps')?.value === '1') {
       score += 10;
+    } else if (this.quizForm.get('step4.usesApps')?.value === '2') {
+      score += 0;
     }
 
     if (this.videoWatched) {
-      score += 14;
-    } else {
       score += 10;
+    } else {
+      score += 0;
     }
 
     this.currentScore = Math.min(score, 100);
@@ -160,12 +172,12 @@ export class QuizComponent {
           return false;
         }
         break;
-      case 5:
-        if (this.step5.invalid) {
-          this.markAllAsTouched(this.step5);
-          return false;
-        }
-        break;
+      // case 5:
+      //   if (this.step5.invalid) {
+      //     this.markAllAsTouched(this.step5);
+      //     return false;
+      //   }
+      //   break;
     }
     return true;
   }
@@ -181,6 +193,8 @@ export class QuizComponent {
 
   markVideoAsWatched() {
     this.videoWatched = true;
+    console.log('se vio el video?', this.videoWatched);
+
     this.calculateScore();
   }
 
@@ -194,10 +208,15 @@ export class QuizComponent {
         return this.step3.invalid;
       case 4:
         return this.step4.invalid;
-      case 5:
-        return this.step5.invalid;
+      // case 5:
+      //   return this.step5.invalid;
       default:
         return false;
     }
+  }
+  
+  getApprovedAmount(): number {
+    const income = parseInt(this.quizForm.get('step2.monthlyIncome')?.value) || 0;
+    return income * 2.5;
   }
 }

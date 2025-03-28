@@ -20,6 +20,7 @@ import {
 export class FormComponent {
   form: FormGroup;
   currentStep = 1;
+  placeholderText: string = '12345678'; 
 
   @Output() formSubmitted = new EventEmitter<void>();
 
@@ -43,6 +44,22 @@ export class FormComponent {
               ])
           )
       ),
+    });
+  }
+
+  ngOnInit() {
+    this.form.get('dniType')?.valueChanges.subscribe(value => {
+      switch (value) {
+        case '1':
+          this.placeholderText = '12345678';
+          break;
+        case '2':
+          this.placeholderText = '123456789012123';
+          break;
+        case '3':
+          this.placeholderText = '123456789123';
+          break;
+      }
     });
   }
 

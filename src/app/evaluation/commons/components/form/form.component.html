@@ -32,7 +32,7 @@
                 id="dni"
                 class="form-control"
                 formControlName="dni"
-                placeholder="12345678"
+                [placeholder]="placeholderText"
               />
             </div>
           </div>
@@ -96,15 +96,13 @@
         <!-- Paso 3 -->
         <div *ngIf="currentStep === 3">
           <div class="mb-3">
-            <label for="ocupacion" class="form-label"
-              >Ocupación</label
-            >
+            <label for="ocupacion" class="form-label">Ocupación</label>
             <input
               type="text"
               id="ocupacion"
               class="form-control"
               formControlName="ocupacion"
-              placeholder="Ej. Contador, Ingeniero, Estudiante, etc."
+              placeholder="Ej. Emprendedora, Ama de casa, etc."
             />
           </div>
 
@@ -144,7 +142,14 @@
 
         <!-- Botones -->
         <div class="d-flex justify-content-between bnts">
-          <button type="button" class="btn btn-secondary" *ngIf="currentStep > 1" (click)="goBack()">Volver</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            *ngIf="currentStep > 1"
+            (click)="goBack()"
+          >
+            Volver
+          </button>
           <button
             type="submit"
             class="btn btn-primary w-100"
