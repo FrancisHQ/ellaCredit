@@ -1,5 +1,5 @@
-<nav class="navbar bg-white shadow-sm flex-column">
-  <div class="container d-flex justify-content-start w-100">
+<nav class="navbar navbar-expand-lg bg-white shadow-sm flex-column">
+  <div class="container d-lg-flex d-none justify-content-start w-100">
     <ul class="navbar-nav flex-row">
       <li class="nav-item me-3">
         <a class="nav-link active" href="#">Personas</a>
@@ -7,56 +7,54 @@
       <li class="nav-item me-3">
         <a class="nav-link" href="#">Pequeña Empresa</a>
       </li>
-      <li class="nav-item"><a class="nav-link" href="#">Empresas</a></li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Empresas</a>
+      </li>
     </ul>
   </div>
 
-  <div
-    class="container d-flex align-items-center justify-content-between w-100 mt-2"
-  >
+  <div class="container d-flex align-items-center justify-content-between w-100 mt-2">
+    <!-- Botón de menú para móviles -->
+    <button class="navbar-toggler" type="button" (click)="toggleMenu()">
+      <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Logo -->
     <a class="navbar-brand d-flex align-items-center" href="#">
       <img src="assets/img/bcp-logo.png" alt="BCP" height="30" />
     </a>
 
-    <div class="d-flex flex-grow-1 justify-content-center">
-      <ul class="navbar-nav d-flex flex-row gap-3">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-            >Productos</a
-          >
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-            >Soluciones Digitales</a
-          >
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-            >Beneficios</a
-          >
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-            >Ayuda y Educación</a
-          >
-        </li>
-        <li class="nav-item d-flex align-items-center">
-          <i class="bi bi-search me-2"></i>
-          <a class="nav-link" href="#">Buscar</a>
-        </li>
-      </ul>
-    </div>
+    <!-- Menú desplegable con diseño responsive -->
+    <div class="collapse navbar-collapse w-100" [class.show]="isMenuOpen" [class.flex-column]="isMenuOpen">
+      <div class="d-flex flex-grow-1 justify-content-center flex-lg-row flex-column align-items-lg-center align-items-start">
+        <ul class="navbar-nav d-flex gap-3 flex-lg-row flex-column w-100 text-lg-start text-center">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Productos</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Soluciones Digitales</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Beneficios</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Ayuda y Educación</a>
+          </li>
+          <li class="nav-item d-flex align-items-center justify-content-lg-start justify-content-center">
+            <i class="bi bi-search me-2"></i>
+            <a class="nav-link" href="#">Buscar</a>
+          </li>
+        </ul>
+      </div>
 
-    <div class="d-flex gap-2">
-      <button
-        class="btn btn-outline-secondary d-flex align-items-center rounded-pill"
-      >
-        <i class="bi bi-person me-1"></i> Abrir cuenta
-      </button>
-
-      <button class="btn btn-primary d-flex align-items-center rounded-pill">
-        <i class="bi bi-lock-fill me-1"></i> Banca por Internet
-      </button>
+      <div class="d-flex gap-2 flex-lg-row flex-column justify-content-end align-items-lg-center align-items-center w-100 mt-3 mt-lg-0">
+        <button class="btn btn-outline-secondary rounded-pill w-lg-auto ">
+          <i class="bi bi-person me-1"></i> Abrir cuenta
+        </button>
+        <button class="btn btn-primary rounded-pill w-lg-auto ">
+          <i class="bi bi-lock-fill me-1"></i> Banca por Internet
+        </button>
+      </div>
     </div>
   </div>
 </nav>

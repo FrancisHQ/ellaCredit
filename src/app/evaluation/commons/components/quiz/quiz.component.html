@@ -1,124 +1,262 @@
 <div class="quiz-container">
-    <!-- Encabezado fijo para pasos 1-5 -->
-    <div *ngIf="currentStep < 6" class="quiz-header">
-      <h2>Para finalizar, evaluaremos tu perfil</h2>
-      <h3 class="mt-3">Calificación para el crédito</h3>
-      <div class="progress-container mt-3">
-        <div class="progress">
-          <div class="progress-bar" [style.width.%]="(currentStep / 6) * 100"></div>
-        </div>
-        <div class="score">{{ currentStep * 10 }}/100 puntos</div>
-      </div>
-    </div>
-  
-    <!-- Contenido dinámico por paso -->
-    <div class="quiz-content" [formGroup]="quizForm">
-      <!-- Paso 1 -->
-      <div *ngIf="currentStep === 1" class="step-1" formGroupName="step1">
-        <h4>¿Tienes una billetera digital activa? (Yape, Plin u otra)</h4>
-        <div class="options mt-3">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" id="walletYes" 
-                   value="Si" formControlName="walletActive">
-            <label class="form-check-label" for="walletYes">Sí</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" id="walletNo" 
-                   value="No" formControlName="walletActive">
-            <label class="form-check-label" for="walletNo">No</label>
-          </div>
-        </div>
-        <div *ngIf="step1.get('walletActive')?.invalid && step1.get('walletActive')?.touched" 
-             class="invalid-feedback">
-          Por favor selecciona una opción
+  <!-- Encabezado fijo para pasos 1-5 -->
+  <div *ngIf="currentStep < 6" class="quiz-header">
+    <h2>Para finalizar, evaluaremos tu perfil</h2>
+    <h3 class="mt-3">Calificación para el crédito</h3>
+    <div class="progress-container mt-2">
+      <div class="progress">
+        <div class="progress-bar" [style.width.%]="currentScore"></div>
+        <div class="progress-check">
+          <i class="bi bi-check-circle-fill" style="color: green"></i>
         </div>
       </div>
-  
-      <!-- Paso 2 -->
-      <div *ngIf="currentStep === 2" class="step-2" formGroupName="step2">
-        <h4>¿Cuánto recibes en promedio al mes?</h4>
-        <input type="number" class="form-control mt-3" 
-               formControlName="monthlyIncome" placeholder="Ingresa el monto en S/">
-        <div *ngIf="step2.get('monthlyIncome')?.invalid && step2.get('monthlyIncome')?.touched" 
-             class="invalid-feedback">
-          Por favor ingresa un monto válido
-        </div>
-      </div>
-  
-      <!-- Paso 3 -->
-      <div *ngIf="currentStep === 3" class="step-3" formGroupName="step3">
-        <h4>¿Puedes darnos el contacto de alguien que confíe en ti?</h4>
-        <input type="text" class="form-control mt-3" 
-               formControlName="trustedContactName" placeholder="Nombre completo">
-        <div *ngIf="step3.get('trustedContactName')?.invalid && step3.get('trustedContactName')?.touched" 
-             class="invalid-feedback">
-          Nombre requerido
-        </div>
-        
-        <input type="tel" class="form-control mt-2" 
-               formControlName="trustedContactPhone" placeholder="Celular">
-        <div *ngIf="step3.get('trustedContactPhone')?.invalid && step3.get('trustedContactPhone')?.touched" 
-             class="invalid-feedback">
-          Ingresa un número de celular válido (9 dígitos)
-        </div>
-      </div>
-  
-      <!-- Paso 4 -->
-      <div *ngIf="currentStep === 4" class="step-4" formGroupName="step4">
-        <h4>¿Alguien de confianza puede ser tu aval? (Debe tener una billetera digital activa)</h4>
-        <div class="options mt-3">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" id="guarantorYes" 
-                   value="Si" formControlName="hasGuarantor">
-            <label class="form-check-label" for="guarantorYes">Si</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" id="guarantorNo" 
-                   value="No" formControlName="hasGuarantor">
-            <label class="form-check-label" for="guarantorNo">No</label>
-          </div>
-        </div>
-        <div *ngIf="step4.get('hasGuarantor')?.invalid && step4.get('hasGuarantor')?.touched" 
-             class="invalid-feedback">
-          Por favor selecciona una opción
-        </div>
-      </div>
-  
-      <!-- Paso 5 -->
-      <div *ngIf="currentStep === 5" class="step-5" formGroupName="step5">
-        <h4>¿Usas alguna app para trabajar o generar ingresos? (Rappi, Uber, PedidosYa u otra)</h4>
-        <div class="options mt-3">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" id="appsYes" 
-                   value="Si" formControlName="usesApps">
-            <label class="form-check-label" for="appsYes">Si</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" id="appsNo" 
-                   value="No" formControlName="usesApps">
-            <label class="form-check-label" for="appsNo">No</label>
-          </div>
-        </div>
-        <div *ngIf="step5.get('usesApps')?.invalid && step5.get('usesApps')?.touched" 
-             class="invalid-feedback">
-          Por favor selecciona una opción
-        </div>
-      </div>
-  
-      <!-- Paso 6 -->
-      <div *ngIf="currentStep === 6" class="step-6">
-        <div class="video-container">
-          <video controls width="100%">
-            <source src="assets/videos/final.mp4" type="video/mp4">
-            Tu navegador no soporta videos HTML5.
-          </video>
-        </div>
-      </div>
-    </div>
-  
-    <!-- Botón Continuar -->
-    <div class="quiz-footer" *ngIf="currentStep < 6">
-      <button class="btn btn-primary" (click)="nextStep()">Continuar <i class="bi bi-arrow-right-short"></i></button>
-      <div class="steps-counter">{{ currentStep }}/6 pasos</div>
+      <div class="score">{{ currentScore }}/100 puntos</div>
     </div>
   </div>
+
+  <div *ngIf="currentStep === 6" class="quiz-header">
+    <h2>
+      ¿Te gustaría aprender un tip rápido sobre cómo funciona un préstamo?
+    </h2>
+  </div>
+
+  <div class="quiz-content" [formGroup]="quizForm">
+    <!-- Paso 1 -->
+    <div *ngIf="currentStep === 1" class="step-1" formGroupName="step1">
+      <h4>¿Tienes una billetera digital activa? (Yape, Plin u otra)</h4>
+      <div class="options mt-3">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="walletYes"
+            value="1"
+            formControlName="walletActive"
+          />
+          <label class="form-check-label" for="walletYes">Sí</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="walletNo"
+            value="2"
+            formControlName="walletActive"
+          />
+          <label class="form-check-label" for="walletNo">No</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 2 -->
+    <div *ngIf="currentStep === 2" class="step-2" formGroupName="step2">
+      <h4>¿Cuánto recibes en promedio al mes?</h4>
+      <input
+        type="text"
+        class="form-control mt-3"
+        pattern="[0-9]*"
+        inputmode="numeric"
+        formControlName="monthlyIncome"
+        placeholder="Ingresa el monto aproximado"
+        (keypress)="validateNumericInput($event)"
+      />
+    </div>
+
+    <!-- Paso 3 -->
+    <div *ngIf="currentStep === 3" class="step-3" formGroupName="step3">
+      <h4>¿Puedes darnos el contacto de alguien que confíe en ti?</h4>
+      <input
+        type="text"
+        class="form-control mt-3"
+        formControlName="trustedContactName"
+        placeholder="Ingresa el nombre y apellido"
+      />
+      <input
+        type="tel"
+        class="form-control mt-2"
+        formControlName="trustedContactPhone"
+        placeholder="999 999 999"
+      />
+    </div>
+
+    <!-- Paso 4 -->
+    <div *ngIf="currentStep === 4" class="step-4" formGroupName="step4">
+      <h4>
+        ¿Alguien de confianza puede ser tu aval? (Debe tener una billetera
+        digital activa)
+      </h4>
+      <div class="options mt-3">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="guarantorYes"
+            value="1"
+            formControlName="hasGuarantor"
+          />
+          <label class="form-check-label" for="guarantorYes">Sí</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="guarantorNo"
+            value="2"
+            formControlName="hasGuarantor"
+          />
+          <label class="form-check-label" for="guarantorNo">No</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 5 -->
+    <div *ngIf="currentStep === 5" class="step-5" formGroupName="step5">
+      <h4>
+        ¿Usas alguna app para trabajar o generar ingresos? (Rappi, Uber,
+        PedidosYa u otra)
+      </h4>
+      <div class="options mt-3">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="appsYes"
+            value="1"
+            formControlName="usesApps"
+          />
+          <label class="form-check-label" for="appsYes">Sí</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="appsNo"
+            value="2"
+            formControlName="usesApps"
+          />
+          <label class="form-check-label" for="appsNo">No</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 6 -->
+    <div *ngIf="currentStep === 6" class="step-6">
+      <div class="video-container">
+        <iframe
+          width="100%"
+          height="315"
+          src="https://www.youtube.com/embed/uPimeR29n0Q?si=6uV_UAn8Z-6S8vbw"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          (play)="markVideoAsWatched()"
+        >
+        </iframe>
+        <p class="align-center">
+          Ver este mini video es opcional, pero puede ayudarte a tomar mejores
+          decisiones financieras. (Si decides verlo, sumas puntos en tu perfil)
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-footer" *ngIf="currentStep <= 6">
+    <button
+      type="submit"
+      class="btn btn-primary"
+      (click)="nextStep()"
+      [disabled]="isCurrentStepInvalid()"
+    >
+      {{ currentStep === 6 ? "Ver mi puntaje" : "Continuar" }}
+      <i class="bi bi-arrow-right-short"></i>
+    </button>
+    <div class="steps-counter">{{ currentStep }}/6 pasos</div>
+  </div>
+
+  <div *ngIf="currentStep > 6" class="results-container text-center p-4 pt-0">
+    <h2 class="fw-bold mb-2">¡Listo! Estos son tus resultados</h2>
+
+    <div class="card border-0 shadow-lg p-4 py-2 rounded-4">
+      <div class="card-body">
+        <div *ngIf="currentScore > 65" class="d-flex align-items-center">
+          <img src="assets/svg/form.svg" alt="Información segura" />
+          <h2 class="h4 mb-0">
+            ¡Felicidades! Obtuviste un puntaje de {{ currentScore }} puntos
+          </h2>
+        </div>
+
+        <div *ngIf="currentScore <= 65" class="d-flex align-items-center">
+          <img src="assets/svg/no-aprobado.svg" alt="Información segura" />
+          <h2 class="h4 mb-0">
+            Obtuviste {{ currentScore }} puntos. ¡No te rindas!
+          </h2>
+        </div>
+
+        <div class="progress-container mt-2">
+          <div class="progress">
+            <div class="progress-bar" [style.width.%]="currentScore"></div>
+            <div class="progress-check">
+              <i
+                [ngClass]="
+                  currentScore > 65
+                    ? 'bi-check-circle-fill'
+                    : 'bi-x-circle-fill'
+                "
+                [ngStyle]="{ color: currentScore > 65 ? 'green' : 'red' }"
+              ></i>
+            </div>
+          </div>
+          <div class="score">{{ currentScore }}/100 puntos</div>
+        </div>
+
+        <div *ngIf="currentScore >= 65" class="p-4 mb-4">
+          <h4 class="h5 fw-bold">¡Tienes un préstamo S/X preaprobado!</h4>
+          <p class="mb-0 text-start">
+            Estás calificada para obtener un crédito. Acércate a una agencia BCP
+            para solicitarlo.
+            <a
+              href="https://www.viabcp.com/canales-presenciales?rfid=header:agencias:link:1"
+              class=""
+              role="button"
+              target="_blank"
+            >
+              Ubica la más cercana.
+            </a>
+          </p>
+        </div>
+
+        <div *ngIf="currentScore < 65" class="p-4">
+          <p class="mb-0 text-start fs-6 lh-sm">
+            Tu evaluación no calificó para un crédito en este momento. Si deseas
+            conocer más detalles, puedes comunicarte con uno de nuestros
+            asesores.
+            <a
+              href="https://api.whatsapp.com/send?phone=51993119898&app=facebook&entry_point=page_cta&fbclid=IwAR3uTy1uKptUM0KhMjWkQGuOiUjEoAlycwKTxdbThpjYpFc1CBEeU46YnyU&text=%C2%A1Hola!+Vengo+de+V%C3%ADaBCP+y+tengo+una+consulta"
+              class=""
+              role="button"
+              target="_blank"
+            >
+              Contactar asesor.
+            </a>
+          </p>
+          <div class="mt-2 text-start">
+            <p class="mb-0 fs-6 lh-sm">
+              Mientras tanto, te brindamos algunas recomendaciones que podrían
+              ayudarte a mejorar tu perfil crediticio:
+            </p>
+            <ul class="ps-3 fs-6 lh-sm">
+              <li>
+                Mantén activa tu billetera digital, usándola al menos 3 veces
+                por semana.
+              </li>
+              <li>
+                Asegúrate de que tu aval también tenga un buen historial y uso
+                activo de productos financieros.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

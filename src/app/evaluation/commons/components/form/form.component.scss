@@ -58,6 +58,12 @@ h2 {
   }
 }
 
+.btn-primary:hover {
+  border-radius: 20px;
+  background-color: #fb8c00;
+  color: white;
+}
+
 .btn-primary:disabled {
   background: #d3d3d3;
   cursor: not-allowed;
@@ -69,6 +75,25 @@ h2 {
   background-color: transparent;
   color: gray;
   margin-bottom: 1rem;
+}
+
+.btn-outline-primary:hover {
+  border: 1px #fb8c00 solid;
+  border-radius: 20px;
+  background-color: #fb8c00;
+  color: white;
+}
+
+.bnts {
+  gap: 1rem;
+}
+
+.btn-secondary {
+  border: 1px #fb8c00 solid;
+  border-radius: 20px;
+  background-color: transparent;
+  color: #fb8c00;
+  font-size: 1.2rem;
 }
 
 .form-check label {

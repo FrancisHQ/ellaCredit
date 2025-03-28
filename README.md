@@ -1,5 +1,22 @@
 # EllaCredito
 
+EllaCredito es un prototipo en desarrollo que busca ofrecer una solución innovadora para la evaluación de créditos dirigidos a mujeres debido al poco acceso a créditos para ellas en Perú. La plataforma está construida con Angular y utiliza Bootstrap 5.3.3 para un diseño responsivo. Además, ha sido desplegada en Vercel para garantizar un acceso rápido y eficiente.
+
+Puedes visualizar el despliegue en Vercel con enlace: https://ella-credito.vercel.app/
+
+## Equipo
+
+**Diseño UX/UI:**  
+- Alexandra Vera  
+- Claudia Herrera  
+
+**Desarrollo:**  
+- Karla Madrid  
+- Francis Hernández  
+
+**Investigación e Innovación:**  
+- Zayda Echevarria
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.8.
 
 ## Development server

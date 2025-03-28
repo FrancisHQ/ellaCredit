@@ -1,7 +1,7 @@
 .quiz-container {
   max-width: 600px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 1rem;
   font-family: "Arial", sans-serif;
 
   .quiz-header {
@@ -21,16 +21,44 @@
   }
 
   .progress-container {
+    position: relative;
+
     .progress {
-      height: 55px;
-      background-color: #cfdfff;
-      border-radius: 27px;
+      height: 70px;
+      border-radius: 34px;
       overflow: hidden;
+      padding: 0.5rem;
+      background-color: #cfdfff;
+      position: relative;
 
       .progress-bar {
         height: 100%;
         background-color: #002a8d;
         transition: width 0.3s ease;
+        border-radius: 27px;
+      }
+
+      .progress-check {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 57px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 5px solid #7d9de6;
+        overflow: hidden;
+      }
+
+      .progress-check i {
+        background: white;
+        font-size: 60px;
+        margin: 0;
+        padding: 0;
+        text-align: center;
       }
     }
 
@@ -43,6 +71,31 @@
     }
   }
 
+  //   .progress-container {
+  //     .progress {
+  //       height: 70px;
+  //       border-radius: 34px;
+  //       overflow: hidden;
+  //       padding: 0.5rem;
+  //       background-color: #cfdfff;
+
+  //       .progress-bar {
+  //         height: 100%;
+  //         background-color: #002a8d;
+  //         transition: width 0.3s ease;
+  //         border-radius: 27px;
+  //       }
+  //     }
+
+  //     .score {
+  //       margin-top: 5px;
+  //       font-weight: bold;
+  //       color: #164bb5;
+  //       display: flex;
+  //       justify-content: flex-end;
+  //     }
+  //   }
+
   .quiz-content {
     margin: 30px 0;
 
@@ -50,6 +103,8 @@
       font-size: 1.1rem;
       margin-bottom: 20px;
       color: #333;
+      display: flex;
+      justify-content: center;
     }
 
     .options {
@@ -93,10 +148,9 @@
     }
 
     .video-container {
-      margin-top: 20px;
-      border-radius: 8px;
+      //   margin-top: 20px;
+      border-radius: 15px;
       overflow: hidden;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
   }
 
@@ -141,5 +195,35 @@
       border-radius: 25px;
       font-size: 1rem;
     }
+  }
+
+  .results-container {
+    max-width: 600px;
+    margin: 0 auto;
+    h2 {
+      color: #002a8d;
+      font-weight: 500;
+      margin-bottom: 3rem;
+    }
+
+    .card-body {
+      h3 {
+        font-size: 1.2rem;
+        color: #aebdda;
+      }
+    }
+  }
+
+  .score-display {
+    font-size: 2.5rem;
+    color: #0d6efd;
+  }
+
+  .approval-message {
+    border-left: 4px solid #198754;
+  }
+
+  .results-container .approval-message.text-warning {
+    border-left-color: #fd7e14;
   }
 }

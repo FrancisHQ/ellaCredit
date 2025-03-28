@@ -49,7 +49,9 @@
       class="cta-icon"
     />
     <p class="cta-text">¿Lista para dar el primer paso?</p>
-    <button class="btn btn-orange" (click)="goToEvaluation()">Comenzar evaluación →</button>
+    <button class="btn btn-orange" (click)="goToEvaluation()">
+      Comenzar evaluación <i class="bi bi-arrow-right-short"></i>
+    </button>
   </div>
 </section>
 
@@ -57,48 +59,75 @@
   <h2 class="section-title">Conoce cómo funciona ellaCrédito</h2>
   <p class="section-subtitle">Te lo explicamos fácil y rápido:</p>
 
-  <div class="how-it-works-container">
-    <img
-      src="/assets/svg/movil-mockup.svg"
-      alt="App ellaCrédito"
-      class="how-it-works-image"
-    />
-    <div class="how-it-works-text">
-      <p><strong>Abre tu app Banca Móvil BCP</strong></p>
-      <p>
-        En la pantalla principal, selecciona la opción
-        <strong>"ellaCrédito"</strong>
-      </p>
+  <div id="howItWorksCarousel" class="carousel slide">
+    <div class="carousel-indicators">
+      <button 
+        *ngFor="let i of slides; let idx = index"
+        type="button"
+        [class.active]="idx === activeSlideIndex"
+        (click)="goToSlide(idx)"
+        [attr.aria-label]="'Slide ' + (idx + 1)">
+      </button>
+    </div>
+
+    <div class="carousel-inner">
+      <div *ngFor="let slide of slides; let i = index" 
+           class="carousel-item" 
+           [ngClass]="{'active': i === activeSlideIndex}">
+        <div class="how-it-works-container">
+          <img [src]="slide.image" [alt]="slide.alt" class="how-it-works-image img-fluid" />
+          <div class="how-it-works-text">
+            <p><strong>{{ slide.title }}</strong></p>
+            <p>{{ slide.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" (click)="prevSlide()">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" (click)="nextSlide()">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Siguiente</span>
+    </button>
+  </div>
+</section>
+
+
+<section class="section-benefits-list">
+  <div class="card benefits-card  border-0 p-4 rounded-4">
+    <div class="row g-0 align-items-center">
+      <div class="col-md-7 p-4">
+        <h2 class="section-title">Beneficios de usar ellaCrédito</h2>
+        <p class="section-subtitle">
+          Un crédito pensado para ti, con condiciones claras y sin complicaciones.
+        </p>
+        <ul class="benefits-list">
+          <li>
+            <i class="bi bi-check-circle-fill"></i> Rápido y sin papeleos: Solicita desde tu app o web y recibe el dinero al instante.
+          </li>
+          <li>
+            <i class="bi bi-check-circle-fill"></i> No necesitas historial crediticio: Evaluamos tu realidad, no solo tus números.
+          </li>
+          <li>
+            <i class="bi bi-check-circle-fill"></i> Tasa clara y justa: Sin letras pequeñas. Sabes cuánto pagarás desde el inicio.
+          </li>
+          <li>
+            <i class="bi bi-check-circle-fill"></i> Pensado para mujeres: Un crédito diseñado para tus metas y necesidades.
+          </li>
+          <li>
+            <i class="bi bi-check-circle-fill"></i> Educación financiera incluida: Te acompañamos con tips y herramientas para manejar mejor tu plata.
+          </li>
+        </ul>
+      </div>
+
+      <!-- Imagen al costado -->
+      <div class="col-md-5 text-center">
+        <img src="/assets/svg/beneficios.svg" alt="Beneficios" class="img-fluid benefits-image">
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section-benefits-list">
-  <h2 class="section-title">Beneficios de usar ellaCrédito</h2>
-  <p class="section-subtitle">
-    Un crédito pensado para ti, con condiciones claras y sin complicaciones.
-  </p>
-
-  <ul class="benefits-list">
-    <li>
-      ✔️ <strong>Rápido y sin papeleos:</strong> Solicita desde tu app o web y
-      recibe el dinero al instante.
-    </li>
-    <li>
-      ✔️ <strong>No necesitas historial crediticio:</strong> Evaluamos tu
-      realidad, no solo tus números.
-    </li>
-    <li>
-      ✔️ <strong>Tasa clara y justa:</strong> Sin letras pequeñas. Sabes cuánto
-      pagarás desde el inicio.
-    </li>
-    <li>
-      ✔️ <strong>Pensado para mujeres:</strong> Un crédito diseñado para tus
-      metas y necesidades.
-    </li>
-    <li>
-      ✔️ <strong>Educación financiera incluida:</strong> Te acompañamos con tips
-      y herramientas para manejar mejor tu plata.
-    </li>
-  </ul>
-</section>

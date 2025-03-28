@@ -32,7 +32,7 @@
                 id="dni"
                 class="form-control"
                 formControlName="dni"
-                placeholder="12345678 - 1"
+                placeholder="12345678"
               />
             </div>
           </div>
@@ -143,14 +143,14 @@
         </div>
 
         <!-- Botones -->
-        <div class="d-flex justify-content-between">
-          <!-- <button type="button" class="btn btn-secondary" *ngIf="currentStep > 1" (click)="goBack()">Volver</button> -->
+        <div class="d-flex justify-content-between bnts">
+          <button type="button" class="btn btn-secondary" *ngIf="currentStep > 1" (click)="goBack()">Volver</button>
           <button
             type="submit"
             class="btn btn-primary w-100"
             [disabled]="currentStep === 2 ? !isOtpComplete() : !isStepValid()"
           >
-            {{ currentStep < 3 ? "Continuar" : "Enviar" }}
+            Continuar
             <i class="bi bi-arrow-right-short"></i>
           </button>
         </div>
